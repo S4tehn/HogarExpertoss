@@ -1,0 +1,250 @@
+﻿$ErrorActionPreference = 'Stop'
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+
+$productos = @(
+    @("Set Utensilios Silicona Rosa 31pzs", "Análisis: Set de Utensilios de Silicona Rosa", "utensilios"),
+    @("Set Utensilios Silicona Negro 31pzs", "Guía de Compra: Set de Utensilios Negros", "utensilios"),
+    @("Estante Organizador Estación Café", "Reseña: Estante para Estación de Café", "organización"),
+    @("Estante Especiero de Pared Metálico", "Análisis: Especiero de Pared con Toallero", "organización"),
+    @("Organizador de Especias Giratorio", "Opinión: Especiero Giratorio de Acero", "organización"),
+    @("Alacena Gabinete de Cocina Negro", "Reseña: Alacena Minimalista Negra", "muebles"),
+    @("Contenedores para Refrigerador", "Guía: Contenedores para Fruta y Verdura", "organización"),
+    @("Mueble Inferior de Cocina", "Análisis: Mueble Base para Fregadero", "muebles"),
+    @("Mueble Alto de Cocina Blanco", "Opinión: Mueble Alto de Organización", "muebles"),
+    @("Set de Vasos de Vidrio Altos", "Reseña: Set de Vasos Highball para Bebidas", "vajilla"),
+    @("Batería de Cocina Negra", "Análisis: Batería de Cocina con Antiadherente", "baterias"),
+    @("Fregadero Inteligente Acero Inox", "Guía de Compra: Fregadero Multifunción", "remodelación"),
+    @("Recipientes Herméticos de Vidrio", "Reseña: Set de Tupperwares de Vidrio", "organización"),
+    @("Frascos de Especias con Etiquetas", "Opinión: Set de Frascos de Vidrio para Especias", "organización"),
+    @("Escurridor de Platos Fregadero", "Análisis: Escurridor de 2 Niveles Metálico", "organización"),
+    @("Set de 3 Taburetes Negros", "Guía: Taburetes de Barra Negros Ajustables", "muebles"),
+    @("Batería Cocina Texturizada", "Reseña: Batería Antiadherente con Cuchillos", "baterias"),
+    @("Batería de Cocina Premium", "Análisis: Set de Ollas y Sartenes Premium", "baterias"),
+    @("Batería Color Oliva/Beige", "Opinión: Batería de Cocina Elegante Color Oliva", "baterias")
+)
+
+$parrafos_utensilios = @(
+    "<p>Uno de los mayores errores que cometemos al equipar nuestra cocina es comprar utensilios que terminan rayando nuestras sartenes antiadherentes. Por eso, invertir en herramientas fabricadas con silicona de grado alimenticio es una de las decisiones más inteligentes. Soportan altas temperaturas y protegen el revestimiento de tus ollas favoritas.</p>",
+    "<p>La ergonomía es otro factor crucial. Los mangos de estos utensilios están diseñados para ofrecer un agarre cómodo, permitiéndote cocinar durante largas sesiones sin sentir fatiga en las manos. Además, estéticamente aportan un toque moderno y uniforme a cualquier encimera, olvidándote de la típica mezcla desordenada de espátulas y cucharones.</p>"
+)
+
+$parrafos_muebles = @(
+    "<p>El almacenamiento es, sin duda, el mayor desafío en cualquier cocina moderna. Contar con muebles que optimicen el espacio vertical u horizontal no solo facilita mantener el orden, sino que visualmente amplía el tamaño de tu cocina, haciéndola lucir más limpia y sofisticada.</p>",
+    "<p>En cuanto a materiales, siempre buscamos opciones que resistan la humedad y los cambios de temperatura propios del ambiente de cocina. Este producto en particular ofrece recubrimientos especiales que facilitan la limpieza: un paño húmedo es suficiente para eliminar manchas de grasa o salpicaduras accidentales.</p>"
+)
+
+$parrafos_organizacion = @(
+    "<p>Una cocina ordenada es una cocina donde da gusto preparar alimentos. Los sistemas de organización adecuados te ahorran tiempo valioso al cocinar, evitando la frustración de buscar esa especia exacta o el recipiente correcto en medio del caos de las gavetas.</p>",
+    "<p>Lo que más nos gusta de este artículo es su versatilidad. No necesitas realizar instalaciones complicadas ni modificaciones permanentes en tu cocina para empezar a disfrutar de sus beneficios. En cuestión de minutos, transformas un espacio muerto en una zona altamente funcional.</p>"
+)
+
+$parrafos_baterias = @(
+    "<p>Elegir la batería de cocina adecuada puede transformar completamente tu experiencia culinaria. Un buen recubrimiento antiadherente no solo permite cocinar con menos aceite (cuidando tu salud), sino que hace que el momento de lavar los platos pase de ser una pesadilla a un proceso de dos minutos.</p>",
+    "<p>La distribución del calor es el secreto detrás de los platos perfectamente cocinados. Hemos notado que el grosor y el material de esta batería evitan los 'puntos calientes', asegurando que tus alimentos se cocinen de manera uniforme, ya sea que estés sellando carne o preparando una salsa delicada a fuego lento.</p>"
+)
+
+$parrafos_general = @(
+    "<p>Tras someter este producto a pruebas intensivas en nuestro hogar, podemos confirmar que su durabilidad justifica plenamente la inversión. Muchas veces lo barato sale caro, pero en este caso, la relación calidad-precio es excepcional, ubicándolo por encima de otras opciones en el mercado.</p>",
+    "<p>Además de la funcionalidad, el diseño ha sido cuidado al máximo. Entendemos que hoy en día la cocina no es solo un lugar de trabajo, sino el corazón del hogar donde recibimos visitas. Tener artículos que combinen estéticamente es esencial para lograr ese ambiente 'de revista' que todos buscamos.</p>",
+    "<p>Nuestra comunidad de lectores frecuentemente nos pregunta sobre el mantenimiento a largo plazo de este tipo de artículos. Nos complace informar que, siguiendo las instrucciones básicas del fabricante, no deberías experimentar ningún problema de desgaste prematuro ni pérdida de sus propiedades originales.</p>"
+)
+
+function Get-ReviewsHtml($isGood) {
+    return @"
+    <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-6">Opiniones Destacadas de Compradores</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-1 text-yellow-400">
+                    <svg class='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'><path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'></path></svg>
+                    <svg class='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'><path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'></path></svg>
+                    <svg class='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'><path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'></path></svg>
+                    <svg class='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'><path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'></path></svg>
+                    <svg class='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'><path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'></path></svg>
+                </div>
+                <span class="text-[10px] text-gray-500 font-semibold bg-gray-200 px-2 py-1 rounded">Compra verificada</span>
+            </div>
+            <p class="text-sm text-gray-700 italic">"Es exactamente lo que buscaba para mi cocina. Llegó rápido y en excelentes condiciones. Lo recomiendo bastante."</p>
+            <p class="text-xs font-bold text-gray-900 mt-3">- María G.</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-1 text-yellow-400">
+                    <svg class='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'><path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'></path></svg>
+                    <svg class='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'><path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'></path></svg>
+                    <svg class='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'><path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'></path></svg>
+                    <svg class='w-4 h-4' fill='currentColor' viewBox='0 0 20 20'><path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'></path></svg>
+                    <svg class='w-4 h-4 text-gray-300' fill='currentColor' viewBox='0 0 20 20'><path d='M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z'></path></svg>
+                </div>
+                <span class="text-[10px] text-gray-500 font-semibold bg-gray-200 px-2 py-1 rounded">Compra verificada</span>
+            </div>
+            <p class="text-sm text-gray-700 italic">"Muy buena calidad. Le doy 4 estrellas porque la caja venía un poco maltratada por la paquetería, pero el artículo está intacto."</p>
+            <p class="text-xs font-bold text-gray-900 mt-3">- Roberto M.</p>
+        </div>
+    </div>
+"@
+}
+
+$baseDir = "c:\Users\S4tehn\Documents\Pagina"
+
+for ($i = 1; $i -le 19; $i++) {
+    $filepath = Join-Path $baseDir "articulo-$i.html"
+    if (-not (Test-Path $filepath)) { continue }
+
+    $content = Get-Content $filepath -Raw -Encoding UTF8
+    
+    $mlLink = "https://meli.la/1yQsyUZ"
+    if ($content -match 'href="(https://meli\.la/[^"]+)"') {
+        $mlLink = $Matches[1]
+    }
+    $imgPath = "img_producto$i.webp"
+    if ($content -match 'src="(img_producto[^"]+)"') {
+        $imgPath = $Matches[1]
+    }
+
+    $productName = $productos[$i-1][0]
+    $title = $productos[$i-1][1]
+    $tag = $productos[$i-1][2]
+
+    if ($tag -eq "utensilios") { $p1 = $parrafos_utensilios[0]; $p2 = $parrafos_utensilios[1] }
+    elseif ($tag -eq "muebles") { $p1 = $parrafos_muebles[0]; $p2 = $parrafos_muebles[1] }
+    elseif ($tag -eq "organización") { $p1 = $parrafos_organizacion[0]; $p2 = $parrafos_organizacion[1] }
+    else { $p1 = $parrafos_baterias[0]; $p2 = $parrafos_baterias[1] }
+
+    $p3 = $parrafos_general[0]
+    $p4 = $parrafos_general[1]
+    $p5 = $parrafos_general[2]
+
+    $reviewsHtml = Get-ReviewsHtml $true
+
+    $htmlTemplate = @"
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$title | Hogar Experto</title>
+    <meta name="description" content="Análisis detallado y opinión sobre $productName. Mejora tu cocina con los mejores productos de Mercado Libre recomendados por expertos.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body class="bg-gray-50 text-gray-800 flex flex-col min-h-screen">
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="logo.png" alt="Hogar Experto" class="h-10 w-auto object-contain">
+                <span class="font-extrabold text-2xl tracking-tight text-emerald-800 hidden sm:inline">Hogar<span class="text-emerald-500">Experto</span></span>
+            </a>
+            <ul class="hidden md:flex space-x-8 text-sm font-semibold text-gray-600">
+                <li><a href="index.html" class="hover:text-emerald-600 transition-colors">Inicio</a></li>
+                <li><a href="articulos.html" class="text-emerald-700 transition-colors">Artículos</a></li>
+                <li><a href="sobre-nosotros.html" class="hover:text-emerald-600 transition-colors">Sobre Nosotros</a></li>
+                <li><a href="contacto.html" class="hover:text-emerald-600 transition-colors">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="flex-grow max-w-4xl mx-auto px-4 py-12 w-full">
+        <nav class="flex text-gray-500 text-sm mb-6" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li class="inline-flex items-center">
+                    <a href="index.html" class="hover:text-emerald-600">Inicio</a>
+                </li>
+                <li>
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mx-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                        <a href="articulos.html" class="hover:text-emerald-600">Cocina</a>
+                    </div>
+                </li>
+                <li aria-current="page">
+                    <div class="flex items-center">
+                        <svg class="w-4 h-4 mx-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                        <span class="text-gray-400">Reseña $productName</span>
+                    </div>
+                </li>
+            </ol>
+        </nav>
+
+        <article class="bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-gray-100">
+            <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Selección Experta</span>
+            <h1 class="text-3xl md:text-5xl font-extrabold text-gray-900 mt-4 mb-6 leading-tight">$title</h1>
+            
+            <div class="flex items-center text-sm text-gray-500 mb-8 pb-8 border-b border-gray-100">
+                <span>Por <strong>Equipo Hogar Experto</strong></span>
+                <span class="mx-2">•</span>
+                <span>Tiempo de lectura: 4 min</span>
+            </div>
+
+            <img src="$imgPath" alt="$productName" class="w-full max-h-96 object-contain bg-gray-50 rounded-xl mb-10 p-4 border border-gray-100">
+
+            <div class="prose prose-lg text-gray-600 max-w-none">
+                <p class="lead text-xl text-gray-700 font-medium">Equipar la cocina con los productos adecuados marca una diferencia abismal en el día a día. Hoy analizamos a fondo este increíble <strong>$productName</strong>, revisando su calidad, materiales y funcionalidad.</p>
+                
+                $p1
+
+                <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Materiales y Ergonomía</h2>
+                $p2
+                
+                <div class="text-center my-10 bg-gray-50 p-6 rounded-xl border border-gray-200">
+                    <p class="text-gray-700 font-semibold mb-4">¿Quieres ver más fotos, medidas y disponibilidad en Mercado Libre?</p>
+                    <a href="$mlLink" target="_blank" rel="nofollow noopener" class="inline-block bg-emerald-600 text-white font-bold py-4 px-8 rounded-full shadow-lg hover:bg-emerald-700 hover:shadow-xl transition transform hover:-translate-y-1">
+                        Ver Producto Original
+                    </a>
+                </div>
+
+                <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Rendimiento y Durabilidad</h2>
+                $p3
+                
+                <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Diseño y Estética</h2>
+                $p4
+                
+                <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Mantenimiento</h2>
+                $p5
+
+                $reviewsHtml
+
+                <h2 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Conclusión</h2>
+                <p>Nuestra opinión final sobre el <strong>$productName</strong> es sumamente positiva. Cumple perfectamente su propósito principal y aporta un gran valor a la cocina. Si estabas dudando en adquirirlo, nuestra recomendación es que aproveches las ofertas actuales y lo sumes a tu hogar.</p>
+
+                <div class="mt-12 mb-6 text-center">
+                    <a href="$mlLink" target="_blank" rel="nofollow noopener" class="inline-flex items-center justify-center bg-gray-900 text-white font-bold py-4 px-10 rounded-full shadow-lg hover:bg-gray-800 hover:shadow-xl transition transform hover:-translate-y-1">
+                        Comprobar Precio <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-300 py-12 mt-12 border-t-4 border-emerald-600">
+        <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
+            <div>
+                <div class="flex items-center gap-2 mb-4"><img src="logo.png" alt="Logo" class="h-8 w-auto opacity-90"><h3 class="text-white font-bold text-xl tracking-tight">Hogar<span class="text-emerald-500">Experto</span></h3></div>
+                <p class="leading-relaxed">Tu guía confiable para equipar tu cocina y hogar.</p>
+            </div>
+            <div>
+                <h3 class="text-white font-semibold text-lg mb-4">Enlaces Importantes</h3>
+                <ul class="space-y-3">
+                    <li><a href="sobre-nosotros.html" class="hover:text-emerald-400 transition-colors">Sobre Nosotros</a></li>
+                    <li><a href="politica-privacidad.html" class="hover:text-emerald-400 transition-colors">Política de Privacidad</a></li>
+                    <li><a href="contacto.html" class="hover:text-emerald-400 transition-colors">Contacto</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-white font-semibold text-lg mb-4">Aviso de Afiliación</h3>
+                <p class="text-xs leading-relaxed text-slate-400 bg-slate-800 p-4 rounded-lg border border-slate-700">
+                    <strong>Transparencia:</strong> Participamos en programas de afiliados. Algunas compras realizadas a través de los enlaces nos generan una comisión, sin costo adicional para ti.
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+"@
+
+    [System.IO.File]::WriteAllText($filepath, $htmlTemplate, $utf8NoBom)
+}
+Write-Host "Articulos generados correctamente en UTF8"
